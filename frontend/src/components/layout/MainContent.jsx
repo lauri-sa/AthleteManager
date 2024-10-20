@@ -4,6 +4,7 @@ import UIContext from "../../context/ui/UIContext";
 import AthleteState from "../../context/athlete/AthleteState";
 
 const MainContent = () => {
+  // Get the required value from the UIContext
   const { isSidebarOpen } = useContext(UIContext);
 
   return (

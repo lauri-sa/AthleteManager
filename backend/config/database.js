@@ -1,9 +1,14 @@
+// Import the dependency injection container
 const bottle = require("./di-container");
+
+// Import Sequelize and DataTypes from sequelize package
 const { Sequelize, DataTypes } = require("sequelize");
 
+// Get the loggers from the DI container
 const infoLogger = bottle.container.InfoLogger;
 const errorLogger = bottle.container.ErrorLogger;
 
+// Destructure environment variables for database configuration
 const {
   DB_HOST,
   DB_USER,
@@ -16,6 +21,7 @@ const {
   POOL_IDLE,
 } = process.env;
 
+// Initialize Sequelize with the database configuration
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   dialect: DIALECT,
@@ -45,6 +51,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   },
 });
 
+// Authenticate the database connection
 (async () => {
   try {
     await sequelize.authenticate();
@@ -56,6 +63,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   }
 })();
 
+// Define the database object with sequelize instance and models
 const db = {
   sequelize,
   models: {
@@ -65,10 +73,12 @@ const db = {
   },
 };
 
+// Set up associations between models if they exist
 Object.values(db.models).forEach((model) => {
   model.associate?.(db.models);
 });
 
+// Provide the database object through the DI container
 bottle.provider("DB", function () {
   this.$get = function () {
     return db;

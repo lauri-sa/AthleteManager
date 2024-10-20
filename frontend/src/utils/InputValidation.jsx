@@ -1,3 +1,4 @@
+// Function that validates the input data of the athlete form and returns true if the data is valid, false otherwise.
 const validator = (athleteData, achievements, pictureUrl) => {
   const errors = [];
 

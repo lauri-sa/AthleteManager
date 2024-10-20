@@ -7,20 +7,29 @@ import validator from "../../utils/InputValidation";
 import "../../styles/css/Modal.css";
 
 const Modal = () => {
+  // Initialize the state variables using the useState hook.
+  // The athleteData state variable stores the data of the selected athlete.
+  // The pictureUrl state variable stores the URL of the athlete's image.
+  // The achievements state variable stores the achievements of the athlete.
+  // The modifyState state variable determines if the modal is in modify state.
+  // The confirmationActionType state variable stores the type of action to be confirmed.
   const [pictureUrl, setPictureUrl] = useState("");
   const [athleteData, setAthleteData] = useState({});
   const [achievements, setAchievements] = useState([]);
   const [modifyState, setModifyState] = useState(false);
   const [confirmationActionType, setConfirmationActionType] = useState("");
 
+  // Destructure the necessary functions and state variables from the UIContext and AthleteContext.
   const { toggleUpdateModal, toggleConfirmationModal, isConfirmationModalOpen } =
     useContext(UIContext);
   const { selectedAthlete, getSports, sports, updateAthlete } =
     useContext(AthleteContext);
 
+  // Destructure the necessary data from the athleteData object.
   const { id, picture_url, Sport, Achievements } = athleteData || {};
   const { sport_name } = Sport || {};
 
+  // The useEffect hook is used to fetch the sports data and set the athleteData, pictureUrl, and achievements state variables.
   useEffect(() => {
     getSports();
     setAthleteData(selectedAthlete);
@@ -28,18 +37,20 @@ const Modal = () => {
     setAchievements(Achievements || []);
   }, [selectedAthlete, picture_url, Achievements]);
 
+  // Event handler function to handle the changes in the input fields.
   const handleOnChange = (e) => {
-    let { name, value } = e.target;
+    let { name, value } = e.target; // Destructure the name and value from the event target.
 
-    if (name === "picture_url") {
+    if (name === "picture_url") { // If the name is picture_url, set the pictureUrl state variable to the value
       setPictureUrl(value);
     } else if (name === "sport_name") {
+      // If the name is sport_name, find the correct sport_id from the sports array and set the sport_id in the athleteData state variable.
       const sport_id = sports.find((sport) => sport.sport_name === value)?.id;
       setAthleteData((prev) => ({
         ...prev,
         sport_id: sport_id,
       }));
-    } else {
+    } else { // Otherwise, update the athleteData state variable with the new value.
       setAthleteData((prev) => ({
         ...prev,
         [name]: value,
@@ -47,68 +58,79 @@ const Modal = () => {
     }
   };
 
+  // Event handler function to handle the update button click.
   const handleUpdateButton = (e) => {
-    e.preventDefault();
-    setModifyState(true);
+    e.preventDefault(); // Prevent the default behavior of the event.
+    setModifyState(true); // Set the modifyState state variable to true.
   };
 
+  // Event handler function to handle the cancel button click.
   const handleCancelButton = (e) => {
-    e.preventDefault();
-    setAthleteData(selectedAthlete);
-    setPictureUrl(picture_url);
-    setAchievements(Achievements);
-    setModifyState(false);
+    e.preventDefault(); // Prevent the default behavior of the event.
+    setAthleteData(selectedAthlete); // Reset the athleteData state variable to the selectedAthlete.
+    setPictureUrl(picture_url); // Reset the pictureUrl state variable to the picture_url.
+    setAchievements(Achievements); // Reset the achievements state variable to the Achievements.
+    setModifyState(false); // Set the modifyState state variable to false.
   };
 
+  // Event handler function to handle the close button click.
   const handleCloseButton = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default behavior of the event.
     if (modifyState) {
+      // If the modal is in modify state, set the confirmationActionType to close and toggle the confirmation modal.
       setConfirmationActionType("close");
       toggleConfirmationModal();
     } else {
+      // Otherwise, close the update modal.
       toggleUpdateModal();
     }
   };
 
+  // Event handler function to handle the delete button click.
   const handleDeleteButton = (e) => {
-    e.preventDefault();
-    setConfirmationActionType("delete");
-    toggleConfirmationModal();
+    e.preventDefault(); // Prevent the default behavior of the event.
+    setConfirmationActionType("delete"); // Set the confirmationActionType to delete.
+    toggleConfirmationModal(); // Toggle the confirmation modal.
   };
 
+  // Event handler function to handle the save button click.
   const handleSaveButton = (e) => {
-    e.preventDefault();
-    const isValid = validator(athleteData, achievements, pictureUrl);
-    console.log(athleteData);
-    if (isValid) {
+    e.preventDefault(); // Prevent the default behavior of the event.
+    const isValid = validator(athleteData, achievements, pictureUrl); // Validate the input fields.
+    if (isValid) { // If the input fields are valid, update the athlete data. Update is handled by AthleteContext.
       updateAthlete(id, {
         ...athleteData,
-        nickname: athleteData.nickname || null,
-        picture_url: pictureUrl || null,
+        nickname: athleteData.nickname || null, // Set the nickname to null if it is an empty string.
+        picture_url: pictureUrl || null, // Set the picture_url to null if it is an empty string.
         Achievements: achievements,
       });
-      toggleUpdateModal();
+      toggleUpdateModal(); // Close the update modal.
     }
   };
 
+  // Event handler function to handle the add achievement button click.
   const handleAddAchievement = (e) => {
-    e.preventDefault();
-    setAchievements((prev) => [...prev, { athlete_id: id, achievement: "" }]);
+    e.preventDefault(); // Prevent the default behavior of the event.
+    setAchievements((prev) => [...prev, { athlete_id: id, achievement: "" }]); // Add a empty achievement to the achievements state variable.
   };
 
+  // Event handler function to handle the delete achievement button click.
   const handleDeleteAchievement = (e, index) => {
-    e.preventDefault();
-    setAchievements((prev) => prev.filter((_, i) => i !== index));
+    e.preventDefault(); // Prevent the default behavior of the event.
+    // Use the filter method to remove the achievement at the specified index.
+    setAchievements((prev) => prev.filter((_, i) => i !== index)); 
   };
 
+  // Event handler function to handle the changes in the achievements state variable.
   const handleAchievementChange = (index, value) => {
     setAchievements((prev) => {
-      const newAchievements = [...prev];
-      newAchievements[index].achievement = value;
-      return newAchievements;
+      const newAchievements = [...prev]; // Create a copy of the achievements state variable
+      newAchievements[index].achievement = value; // Update the achievement at the specified index
+      return newAchievements; // Return the updated achievements
     });
   };
 
+  // Define the formFields array that contains the form fields for the athlete data.
   const formFields = [
     { label: "First name", name: "first_name", type: "text" },
     { label: "Last name", name: "last_name", type: "text" },

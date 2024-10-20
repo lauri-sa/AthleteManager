@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import UIContext from "../../context/ui/UIContext";
 
 const Sidebar = () => {
+  // Get the required value from the UIContext
   const { isSidebarOpen } = useContext(UIContext);
 
   return (

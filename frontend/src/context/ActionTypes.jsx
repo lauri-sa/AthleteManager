@@ -1,3 +1,4 @@
+// Constants for the actions that can be dispatched to the context reducer
 export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
 export const TOGGLE_DARK_MODE = "TOGGLE_DARK_MODE";
 export const TOGGLE_CREATE_MODAL = "TOGGLE_CREATE_MODAL";

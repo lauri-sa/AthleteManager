@@ -6,35 +6,45 @@ import validator from "../../utils/InputValidation";
 import "../../styles/css/Modal.css";
 
 const Modal = () => {
+  // Initialize the state variables using the useState hook.
+  // The athleteData state variable will store the athlete's data.
+  // The pictureUrl state variable will store the URL of the athlete's image.
+  // The achievements state variable will store the athlete's achievements.
   const [pictureUrl, setPictureUrl] = useState("");
   const [athleteData, setAthleteData] = useState({
-    sport_id: 1,
-    first_name: "",
-    last_name: "",
-    nickname: "",
+    sport_id: 1, // Default sport_id
+    first_name: "", // Default first_name
+    last_name: "", // Default last_name
+    nickname: "", // Default nickname
+    // These fields are initialized because of the validator function
   });
 
   const [achievements, setAchievements] = useState([]);
 
+  // Get the required values from the UIContext and AthleteContext
   const { toggleCreateModal } = useContext(UIContext);
   const { getSports, sports, createAthlete } = useContext(AthleteContext);
 
+  // Use the useEffect hook to call the getSports function when the component mounts.
+  // The getSports function will fetch the sports from the API and it's managed by the AthleteContext.
   useEffect(() => {
     getSports();
   }, []); // Warning can be ignored
 
+  // Event handler function to handle the changes in the input fields.
   const handleOnChange = (e) => {
-    let { name, value } = e.target;
+    let { name, value } = e.target; // Destructure the name and value from the event target
 
-    if (name === "picture_url") {
-      setPictureUrl(value);
+    if (name === "picture_url") { // If the name is picture_url, set the pictureUrl state variable to the value
+      setPictureUrl(value); 
     } else if (name === "sport_name") {
+      // If the name is sport_name, find the correct sport_id from the sports array and set the sport_id in the athleteData state variable.
       const sport_id = sports.find((sport) => sport.sport_name === value)?.id;
       setAthleteData((prev) => ({
         ...prev,
         sport_id: sport_id,
       }));
-    } else {
+    } else { // Otherwise, update the athleteData state variable with the new value.
       setAthleteData((prev) => ({
         ...prev,
         [name]: value,
@@ -42,6 +52,9 @@ const Modal = () => {
     }
   };
 
+  // Event handler function to handle the closing of the modal.
+  // It resets the athleteData, pictureUrl, and achievements state variables and closes the modal.
+  // Modal closing is managed by the UIContext.
   const handleCloseButton = (e) => {
     e.preventDefault();
     setAthleteData({});
@@ -50,39 +63,44 @@ const Modal = () => {
     toggleCreateModal();
   };
 
+  // Event handler function to handle the creation of the athlete.
   const handleCreateButton = (e) => {
-    e.preventDefault();
-    const isValid = validator(athleteData, achievements, pictureUrl);
-    console.log(athleteData);
-    if (isValid) {
+    e.preventDefault(); // Prevent the default form submission behavior
+    const isValid = validator(athleteData, achievements, pictureUrl); // Validate the athleteData, achievements, and pictureUrl
+    if (isValid) { // If the data is valid, create the athlete using the createAthlete function from the AthleteContext.
       createAthlete({
         ...athleteData,
-        nickname: athleteData.nickname || null,
-        picture_url: pictureUrl || null,
+        nickname: athleteData.nickname || null, // Set the nickname to null if it's empty
+        picture_url: pictureUrl || null, // Set the picture_url to null if it's empty
         Achievements: achievements,
       });
-      toggleCreateModal();
+      toggleCreateModal(); // Close the modal
     }
   };
 
+  // Event handler function to add an achievement to the achievements state variable.
   const handleAddAchievement = (e) => {
-    e.preventDefault();
-    setAchievements((prev) => [...prev, { achievement: "" }]);
+    e.preventDefault(); // Prevent the default form submission behavior
+    setAchievements((prev) => [...prev, { achievement: "" }]); // Add an empty achievement to the achievements state variable
   };
 
+  // Event handler function to delete an achievement from the achievements state variable.
   const handleDeleteAchievement = (e, index) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission behavior
+    // Use the filter method to remove the achievement at the specified index.
     setAchievements((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // Event handler function to handle the changes in the achievements state variable.
   const handleAchievementChange = (index, value) => {
     setAchievements((prev) => {
-      const newAchievements = [...prev];
-      newAchievements[index].achievement = value;
-      return newAchievements;
+      const newAchievements = [...prev]; // Create a copy of the achievements state variable
+      newAchievements[index].achievement = value; // Update the achievement at the specified index
+      return newAchievements; // Return the updated achievements
     });
   };
 
+  // Define the formFields array that contains the form fields for the athlete data.
   const formFields = [
     { label: "First name", name: "first_name", type: "text" },
     { label: "Last name", name: "last_name", type: "text" },

@@ -2,6 +2,7 @@ import { useContext } from "react";
 import UIContext from "../../context/ui/UIContext";
 
 const Header = () => {
+  // Get the required values from the UIContext
   const { isSidebarOpen, toggleSidebar, toggleDarkMode, isDarkMode } = useContext(UIContext);
 
   return (

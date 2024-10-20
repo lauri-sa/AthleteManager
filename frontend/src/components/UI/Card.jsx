@@ -5,12 +5,16 @@ import AthleteContext from "../../context/athlete/AthleteContext";
 import "../../styles/css/Card.css";
 
 const Card = ({ index }) => {
+  // Get the required values from the UIContext and AthleteContext
   const { toggleUpdateModal } = useContext(UIContext);
   const { setSelectedAthlete, athletes } = useContext(AthleteContext);
 
+  // Destructure the required values from the athletes array at the given index
   const { picture_url, first_name, last_name, Sport } = athletes[index];
   const { sport_name } = Sport;
 
+  // Function to open the modal and set the selected athlete.
+  // Both the modal and the selected athlete are managed by the UIContext.
   const openModal = () => {
     setSelectedAthlete(index);
     toggleUpdateModal();

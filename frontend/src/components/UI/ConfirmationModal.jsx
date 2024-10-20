@@ -5,20 +5,25 @@ import UIContext from "../../context/ui/UIContext";
 import "../../styles/css/Modal.css";
 
 const ConfirmationModal = ({ actionType }) => {
+  // Get the required values from the UIContext and AthleteContext
   const { toggleConfirmationModal, toggleUpdateModal } = useContext(UIContext);
   const { selectedAthlete, deleteAthlete } = useContext(AthleteContext);
 
+  // Destructure the id from the selected athlete
   const { id } = selectedAthlete;
 
+  // Function to close the modals. Both functions are managed by the UIContext.
   const closeModals = () => {
     toggleConfirmationModal();
     toggleUpdateModal();
   }
 
+  // Function to handle the close action.
   const handleClose = () => {
     closeModals();
   };
 
+  // Function to handle the delete action. The deleteAthlete function is managed by the AthleteContext.
   const handleDelete = () => {
     deleteAthlete(id);
     closeModals();

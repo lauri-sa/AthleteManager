@@ -6,9 +6,11 @@ import UpdateModal from "../components/UI/UpdateModal";
 import CreateModal from "../components/UI/CreateModal";
 
 const AthletesPage = () => {
+  // Get the required values from the UIContext and AthleteContext
   const { isUpdateModalOpen, isCreateModalOpen, toggleCreateModal } = useContext(UIContext);
   const { athletes, getAthletes } = useContext(AthleteContext);
 
+  // Fetch the athletes when the component mounts. This will only run once.
   useEffect(() => {
     getAthletes();
   }, []);
@@ -32,6 +34,7 @@ const AthletesPage = () => {
         </div>
       </div>
 
+      {/* Conditional rendering of the modals */}
       {isCreateModalOpen && (
         <CreateModal/>
       )}
