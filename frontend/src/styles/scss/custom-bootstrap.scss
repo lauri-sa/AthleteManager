@@ -1,0 +1,126 @@
+@import "./custom-variables";
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+@include color-mode(light) {
+  .bg-primary {
+    background-color: $primary !important;
+  }
+
+  .text-light {
+    color: $light !important;
+  }
+
+  .border-light {
+    border-color: $light !important;
+  }
+
+  .btn-card {
+    border-color: darken($dark, 10%) !important;
+    color: $light;
+  }
+
+  .btn-modal {
+    border-color: darken($dark, 10%) !important;
+    color: $light;
+  }
+
+  .btn-delete {
+    border-color: darken($dark, 10%) !important;
+    color: $light;
+  }
+
+  .btn-card:active {
+    color: $light;
+  }
+
+  .btn-modal:active {
+    color: $light;
+  }
+
+  .btn-delete:active {
+    color: $light;
+  }
+
+  .btn:hover {
+    background: lighten($color: $primary, $amount: 10) !important;
+  }
+
+  .card {
+    border-color: darken($dark, 10%) !important;
+    color: darken($dark, 10%) !important;
+  }
+
+  .modal-header,
+  .modal-content,
+  .modal-footer,
+  .modal-image {
+    border-color: darken($dark, 10%) !important;
+    color: darken($dark, 10%) !important;
+  }
+
+  .form-control,
+  .form-select {
+    border-color: darken($dark, 10%) !important;
+    color: darken($dark, 10%) !important;
+  }
+
+  .content {
+    outline: 10px solid $primary;
+  }
+}
+
+@include color-mode(dark) {
+  .bg-primary {
+    background-color: $primary-dark !important;
+  }
+
+  .text-light {
+    color: $light-dark !important;
+  }
+
+  .border-light {
+    border-color: $light-dark !important;
+  }
+
+  .btn-card {
+    color: $light-dark !important;
+    border-color: $light-dark !important;
+  }
+
+  .btn-modal {
+    color: $light-dark !important;
+    border-color: $light-dark !important;
+  }
+
+  .btn-delete {
+    color: $light-dark !important;
+    border-color: $light-dark !important;
+  }
+
+  .btn:hover {
+    background: lighten($color: $primary-dark, $amount: 10) !important;
+  }
+
+  .card {
+    border-color: $light-dark !important;
+    color: $light-dark !important;
+  }
+
+  .modal-header,
+  .modal-content,
+  .modal-footer,
+  .modal-image {
+    border-color: $light-dark !important;
+    color: $light-dark !important;
+  }
+
+  .form-control,
+  .form-select {
+    border-color: $light-dark !important;
+    color: $light-dark !important;
+  }
+
+  .content {
+    outline: 10px solid $primary-dark;
+  }
+}

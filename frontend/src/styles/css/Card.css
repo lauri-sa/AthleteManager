@@ -1,0 +1,11 @@
+.card {
+    height: 350px !important;
+}
+
+.card-image {
+    height: 225px;
+}
+
+.card-img-top {
+    height: 225px;
+}

@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "AfacadFlux";
+  src: url("../../assets/fonts/AfacadFlux-Regular.ttf") format("truetype");
+}
+
+* {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#root {
+  height: 100%;
+}
+
+html, body {
+  height: 100%;
+  font-family: AfacadFlux, Arial, sans-serif;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Hides scrollbar */
+}

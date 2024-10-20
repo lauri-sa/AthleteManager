@@ -1,0 +1,11 @@
+# Node modules
+node_modules/
+
+# Enviroment variables
+.env
+
+# Ignore logs folder
+logs/
+
+# Ignore sql scripts
+sql_scripts/

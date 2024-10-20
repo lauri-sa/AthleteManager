@@ -1,0 +1,16 @@
+.modal {
+  display: block !important;
+}
+
+.update-modal {
+  height: 75vh !important;
+  overflow-y: auto !important;
+}
+
+.modal-image {
+    height: 300px !important;
+}
+
+.btn-modal {
+  width: 65px !important;
+}
