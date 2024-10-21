@@ -93,9 +93,10 @@ const Modal = () => {
 
   // Event handler function to handle the changes in the achievements state variable.
   const handleAchievementChange = (index, value) => {
-    setAchievements((prev) => {
-      const newAchievements = [...prev]; // Create a copy of the achievements state variable
-      newAchievements[index].achievement = value; // Update the achievement at the specified index
+    setAchievements((prev) => { 
+      const newAchievements = prev.map((achievement, i) => // Use the map method to update the achievement at the specified index.
+        i === index ? { ...achievement, achievement: value } : achievement
+      );
       return newAchievements; // Return the updated achievements
     });
   };

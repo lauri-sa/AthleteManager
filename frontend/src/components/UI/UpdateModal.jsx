@@ -71,6 +71,8 @@ const Modal = () => {
     setPictureUrl(picture_url); // Reset the pictureUrl state variable to the picture_url.
     setAchievements(Achievements); // Reset the achievements state variable to the Achievements.
     setModifyState(false); // Set the modifyState state variable to false.
+    console.log(selectedAthlete);
+    console.log(achievements);
   };
 
   // Event handler function to handle the close button click.
@@ -123,9 +125,10 @@ const Modal = () => {
 
   // Event handler function to handle the changes in the achievements state variable.
   const handleAchievementChange = (index, value) => {
-    setAchievements((prev) => {
-      const newAchievements = [...prev]; // Create a copy of the achievements state variable
-      newAchievements[index].achievement = value; // Update the achievement at the specified index
+    setAchievements((prev) => { 
+      const newAchievements = prev.map((achievement, i) => // Use the map method to update the achievement at the specified index.
+        i === index ? { ...achievement, achievement: value } : achievement
+      );
       return newAchievements; // Return the updated achievements
     });
   };
@@ -259,7 +262,7 @@ const Modal = () => {
                         type="text"
                         name="picture_url"
                         placeholder="Picture URL"
-                        value={pictureUrl}
+                        value={pictureUrl || ""}
                         onChange={handleOnChange}
                       />
                     </div>
@@ -282,7 +285,7 @@ const Modal = () => {
                             <div className="input-group w-75 mx-auto">
                               <input
                                 className="form-control border-2 ps-2"
-                                value={achievement.achievement}
+                                value={achievement.achievement || ""}
                                 onChange={(e) =>
                                   handleAchievementChange(index, e.target.value)
                                 }
